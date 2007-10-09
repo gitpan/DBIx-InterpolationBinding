@@ -11,7 +11,7 @@ use overload '""'       => \&_convert_object_to_string,
              'fallback' => 1;
 require DBI;
 
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 $DEBUG = 0;
 

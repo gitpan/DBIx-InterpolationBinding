@@ -1,4 +1,4 @@
-DBIx-InterpolationBinding version 0.03
+DBIx-InterpolationBinding version 0.04
 ======================================
 
 This module is provides a method to prepare and execute SQL statements

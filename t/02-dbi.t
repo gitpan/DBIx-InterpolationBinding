@@ -19,7 +19,7 @@ unless($dbh) {
 
 $dbh->{RaiseError} = 1;
 # Set up environment
-$dbh->do("DROP TABLE IF EXISTS fruit (dKey INT, dVal VARCHAR(10))")
+$dbh->do("DROP TABLE IF EXISTS fruit")
 	or die($dbh->errstr());
 $dbh->do("CREATE TABLE fruit (dKey INT, dVal VARCHAR(10))")
 	or die($dbh->errstr());
