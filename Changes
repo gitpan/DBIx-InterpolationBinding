@@ -1,0 +1,13 @@
+Revision history for Perl extension DBIx::InterpolationBinding.
+
+0.03  Tue Oct 09
+	- renamed to DBIx::InterpolationBinding
+
+0.02  Mon Apr 09 14:48:34 2007
+	- Moved dbi_exec to $dbh->execute
+	- Used DBI set_err for error reporting
+	- Improved test suite
+
+0.01  Sat Dec 16 08:47:52 2006
+	- original version
+
