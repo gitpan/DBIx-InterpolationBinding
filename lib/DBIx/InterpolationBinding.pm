@@ -11,7 +11,7 @@ use overload '""'       => \&_convert_object_to_string,
              'fallback' => 1;
 require DBI;
 
-$VERSION = '0.04';
+$VERSION = '0.05';
 
 $DEBUG = 0;
 
@@ -178,7 +178,7 @@ major, so you may wish to take care.
 The system doesn't know which bits are SQL and which are bind variables.
 The following doesn't work as expected:
 
-  dbi_exec($dbh, "SELECT * FROM table WHERE id=$id $where_clause");
+  $dbh->execute("SELECT * FROM table WHERE id=$id $where_clause");
 
 You need to build it outside the scope of DBIx::InterpolationBinding in
 this case, using conventional bind params.
