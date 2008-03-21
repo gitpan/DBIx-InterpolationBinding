@@ -7,7 +7,7 @@
 
 use Test;
 my $tests;
-BEGIN { $tests = 8; plan tests => $tests };
+BEGIN { $tests = 10; plan tests => $tests };
 
 my $dbh;
 eval 'use DBI; $dbh = DBI->connect("dbi:DBM:");';
@@ -55,10 +55,17 @@ ok($sth and $sth->rows == 1);
 
 # Try a select
 my $row;
-my $sth = $dbh->execute("SELECT * FROM fruit WHERE dVal = $g");
+$sth = $dbh->execute("SELECT * FROM fruit WHERE dVal = $g");
 ok($sth and $sth->rows == 1 and $row = $sth->fetchrow_hashref and
    $row->{dKey} eq $b and $row->{dVal} eq $g);
 $sth->finish if $sth;
+
+# And a loop
+foreach my $type ($d, $g) {
+	$sth = $dbh->execute("SELECT * FROM fruit WHERE dVal = $type");
+	ok($sth and $sth->rows == 1 and $row = $sth->fetchrow_hashref and
+		$row->{dVal} eq $type);
+}
 
 }
 

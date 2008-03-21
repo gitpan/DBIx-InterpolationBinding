@@ -1,4 +1,4 @@
-DBIx-InterpolationBinding version 0.05
+DBIx-InterpolationBinding version 1.00
 ======================================
 
 This module is provides a method to prepare and execute SQL statements
@@ -26,7 +26,7 @@ This module requires these other modules and libraries:
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2006-2007 by Luke Ross
+Copyright (C) 2006-2008 by Luke Ross
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.005 or,

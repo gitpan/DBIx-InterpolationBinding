@@ -11,7 +11,7 @@ use overload '""'       => \&_convert_object_to_string,
              'fallback' => 1;
 require DBI;
 
-$VERSION = '0.05';
+$VERSION = '1.00';
 
 $DEBUG = 0;
 
@@ -83,6 +83,7 @@ sub _append_item_to_object {
 	# $new_hash will become the object we return, so the old one
 	# isn't mashed.
 	my $new_hash = { %$self };
+	$new_hash->{bind_params} = [ @{ $self->{bind_params} } ];
 
 	# At this point, the thing that isn't $self is either an object of
 	# this class, or it's a boring string. Also, we either need to append
@@ -187,7 +188,7 @@ this case, using conventional bind params.
 overloaded
 
 If the string passed in is to be interpolated or concatenated into a
-string in the lexical scope this is fine, but if the string from
+string in the lexical scope this is fine, but if a string from
 outside is a bit of SQL the effects may be curious.
 
 =item Trying to concat (. operator) an overloaded object with a string
@@ -213,7 +214,7 @@ Luke Ross, E<lt>luke@lukeross.nameE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2006-2007 by Luke Ross
+Copyright (C) 2006-2008 by Luke Ross
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.5 or,
