@@ -5,9 +5,9 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test;
+use Test::More;
 my $tests;
-BEGIN { $tests = 10; plan tests => $tests };
+BEGIN { $tests = 22; plan tests => $tests };
 
 my $dbh;
 eval 'use DBI; $dbh = DBI->connect("dbi:DBM:");';
@@ -21,10 +21,10 @@ $dbh->{RaiseError} = 1;
 # Set up environment
 $dbh->do("DROP TABLE IF EXISTS fruit")
 	or die($dbh->errstr());
-$dbh->do("CREATE TABLE fruit (dKey INT, dVal VARCHAR(10))")
+$dbh->do("CREATE TABLE fruit (dkey INT, dval VARCHAR(10))")
 	or die($dbh->errstr());
 
-ok(1); # If we made it this far, we're ok.
+pass("Database handle created");
 
 #########################
 
@@ -40,31 +40,38 @@ my $g = 'apples';
 use DBIx::InterpolationBinding;
 
 # Try an insert
-ok($dbh->execute("INSERT INTO fruit VALUES ($a,$d)"));
-ok($dbh->execute("INSERT INTO fruit VALUES ($b,$e)"));
-ok($dbh->execute("INSERT INTO fruit VALUES ($c,$f)"));
+ok($dbh->execute("INSERT INTO fruit VALUES ($a,$d)"), "Insert #1");
+ok($dbh->execute("INSERT INTO fruit VALUES ($b,$e)"), "Insert #2");
+ok($dbh->execute("INSERT INTO fruit VALUES ($c,$f)"), "Insert #3");
 
 # And an update
-$sth = $dbh->execute("UPDATE fruit SET dVal=$g WHERE dKey=$b");
-ok($sth and $sth->rows == 1);
+$sth = $dbh->execute("UPDATE fruit SET dval=$g WHERE dkey=$b");
+ok($sth, "Update query returned a handle");
+is($sth->rows, 1, "Update handle has one row");
 $sth->finish if $sth;
 
 # And a delete
-$sth = $dbh->execute("DELETE FROM fruit WHERE dVal=$f");
-ok($sth and $sth->rows == 1);
+$sth = $dbh->execute("DELETE FROM fruit WHERE dval=$f");
+ok($sth, "Delete query returned a handle");
+is($sth->rows, 1, "Delete handle has one row");
 
 # Try a select
 my $row;
-$sth = $dbh->execute("SELECT * FROM fruit WHERE dVal = $g");
-ok($sth and $sth->rows == 1 and $row = $sth->fetchrow_hashref and
-   $row->{dKey} eq $b and $row->{dVal} eq $g);
+$sth = $dbh->execute("SELECT * FROM fruit WHERE dval = $g");
+ok($sth, "Simple select query returned a handle");
+is($sth->rows, 1, "Simple select handle has one row");
+ok($row = $sth->fetchrow_hashref, "Simple select row exists");
+is($row->{dkey}, $b, "Simple select key is correct");
+is($row->{dval}, $g, "Simple select value is correct");
 $sth->finish if $sth;
 
 # And a loop
 foreach my $type ($d, $g) {
-	$sth = $dbh->execute("SELECT * FROM fruit WHERE dVal = $type");
-	ok($sth and $sth->rows == 1 and $row = $sth->fetchrow_hashref and
-		$row->{dVal} eq $type);
+	$sth = $dbh->execute("SELECT * FROM fruit WHERE dval = $type");
+	ok($sth, "Loop select ($type) query returned a handle");
+	is($sth->rows, 1, "Loop select ($type) handle has one row");
+	ok($row = $sth->fetchrow_hashref, "Loop select ($type) row exists");
+	is($row->{dval}, $type, "Loop select ($type) value is correct");
 }
 
 }
@@ -73,7 +80,7 @@ foreach my $type ($d, $g) {
 # overloaded.
 eval {
 	$dbh->{PrintError} = 0;
-	my $sth = $dbh->execute("SELECT * FROM fruit WHERE dVal = $c");
+	my $sth = $dbh->execute("SELECT * FROM fruit WHERE dval = $c");
 	$sth->finish;
 };
 ok($@);

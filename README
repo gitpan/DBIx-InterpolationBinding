@@ -1,4 +1,4 @@
-DBIx-InterpolationBinding version 1.00
+DBIx-InterpolationBinding version 1.01
 ======================================
 
 This module is provides a method to prepare and execute SQL statements
@@ -23,10 +23,11 @@ This module requires these other modules and libraries:
   Perl 5.005_03 or greater
   DBI
   DBD::DBM for some of the tests
+  Test::More for some of the tests
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2006-2008 by Luke Ross
+Copyright (C) 2006-2011 by Luke Ross
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.005 or,

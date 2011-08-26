@@ -1,5 +1,9 @@
 Revision history for Perl extension DBIx::InterpolationBinding.
 
+1.01  Fri Aug 26 2011 23:40:00
+	- Fixed licensing inconsistency
+	- Updated tests to work with SQL::Statement
+
 1.00  Fri Mar 21 2008 19:00:00
 	- Fixed bug with bind parameters in a loop
 	- Documentation updates

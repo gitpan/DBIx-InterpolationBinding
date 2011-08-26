@@ -11,7 +11,7 @@ use overload '""'       => \&_convert_object_to_string,
              'fallback' => 1;
 require DBI;
 
-$VERSION = '1.00';
+$VERSION = '1.01';
 
 $DEBUG = 0;
 
@@ -20,6 +20,7 @@ sub import {
 
 	# Bind the execute method into the DBI namespace
 	# We do it twice to avoid a tedious warning
+	# We would use the warnings pragma, but this is 5.005 :-)
 	*DBI::db::execute = \&dbi_exec;
 	*DBI::db::execute = \&dbi_exec;
 }
@@ -214,10 +215,10 @@ Luke Ross, E<lt>luke@lukeross.nameE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2006-2008 by Luke Ross
+Copyright (C) 2006-2011 by Luke Ross
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.5 or,
+it under the same terms as Perl itself, either Perl version 5.005 or,
 at your option, any later version of Perl 5 you may have available.
 
 =cut
